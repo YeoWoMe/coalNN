@@ -29,7 +29,7 @@ import msprime
 from utils import Config, Logger, print_model_spec, track, save_numpy
 from scipy.stats import gmean
 from scipy import stats
-from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score, median_absolute_error
+from sklearn.metrics import root_mean_squared_error, mean_absolute_error, r2_score, median_absolute_error
 from sklearn.ensemble import AdaBoostClassifier
 
 
@@ -201,7 +201,7 @@ class Dating:
         is_prediction_nan = np.isnan(prediction)
         non_nan_prediction = prediction[np.logical_not(is_prediction_nan)]
         non_nan_label = label[np.logical_not(is_prediction_nan)]
-        rmse = mean_squared_error(non_nan_label, non_nan_prediction, squared=False)
+        rmse = root_mean_squared_error(non_nan_label, non_nan_prediction)
         mean_absolute_err = mean_absolute_error(non_nan_label, non_nan_prediction)
         median_absolute_err = median_absolute_error(non_nan_label, non_nan_prediction)
         r2 = stats.pearsonr(non_nan_label, non_nan_prediction)[0] ** 2
