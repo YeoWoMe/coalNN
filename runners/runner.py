@@ -59,14 +59,14 @@ class Runner:
         self.input_size, self.focus_input_size, self.context_size, self.x_dim = None, None, None, None
         self.root_time = None
 
-        self.run_CoalNN = hasattr(self.config, 'run_CoalNN') and self.config.run_CoalNN
+        self.should_run_CoalNN = hasattr(self.config, 'run_CoalNN') and self.config.run_CoalNN
         self.visualise_first_layer = hasattr(self.config, 'visualise_first_layer') and self.config.visualise_first_layer
         self.saliency_map = hasattr(self.config, 'saliency_map') and self.config.saliency_map
         self.perturb_maf = hasattr(self.config, 'perturb_maf') and self.config.perturb_maf
 
         self.create_data()
 
-        if self.run_CoalNN or self.visualise_first_layer or self.saliency_map or self.perturb_maf:
+        if self.should_run_CoalNN or self.visualise_first_layer or self.saliency_map or self.perturb_maf:
             ##########
             # Model
             ##########
@@ -141,7 +141,7 @@ class Runner:
         if self.saliency_map:
             self.compute_saliency_map_per_site() 
 
-        if self.run_CoalNN:
+        if self.should_run_CoalNN:
             self.run_CoalNN()
 
     def compute_correlation_xor(self):
