@@ -18,9 +18,7 @@ from tqdm import tqdm
 from time import time
 from torch.utils.data import DataLoader
 from real_data.data import RealDataset
-from models.fc_network import FcNetwork
 from models.cnn_network import CnnNetwork
-from models.transformer_network import TransformerNetwork
 from utils import Config, Logger, print_model_spec, track
 from sklearn.ensemble import AdaBoostClassifier
 from scipy.stats import gmean
