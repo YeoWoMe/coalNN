@@ -35,6 +35,7 @@ chr: 2
 chr_region: 1
 chr_length: 30
 demography: constant
+reference_genome : hg19
 
 # Transformation and features
 downsample_size: 150
