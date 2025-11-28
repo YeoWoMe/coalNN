@@ -12,6 +12,7 @@ n_workers: 6
 gpu: True
 constant_piecewise_output: False
 const_threshold: 0.7
+scatter_plot: True
 
 # interpretability analysis
 saliency_map: False
