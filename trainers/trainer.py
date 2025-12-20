@@ -140,6 +140,38 @@ class Trainer:
 
     def train(self):
         print('Starting training session..')
+        print(
+            f"The number of simulation : {self.config.num_simulations}\n"
+            f"random seed for validation: {self.config.seed_val}\n"
+            f"sample size for train: {self.config.sample_size_train}\n"
+            f"sample size for validation: {self.config.sample_size_val}"
+            )
+
+        print(
+            f"Reference genome: {self.config.reference_genome}\n"
+            f"Data type: {self.config.data_type}"
+)
+
+        if self.config.demography == "constant":
+            print(
+                f"demographic model: constant\n"
+                f"Ne: {self.config.Ne}\n"
+                f"mutation rate: {self.config.muration_rate}"
+            )
+        else:
+            print(
+                f"demographic model: {self.config.demography}\n"
+                f"mutation rate: {self.config.muration_rate}"
+            )
+
+        print(
+            f"**Additional parameters**\n"
+            f"NCGC rate: {self.config.gc_rate}\n"
+            f"switch error rate (phasing error rate): {self.config.switch_error_rate}\n"
+            f"genotyping error rate: {self.config.gntp_error_rate}"
+            )
+        
+        
         self.model.train()
 
         self.start_time = time()
