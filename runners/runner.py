@@ -85,19 +85,17 @@ class Runner:
             # Restore model
             self.load_checkpoint(self.options.restore)
 
+        if self.config.scatter_plot:
+            self.TMRCA_LABEL = []
+            self.TMRCA_PREDICTION = []
+            self.TMRCA_PREDICTION_CONST = []
+            self.MAF = []
+
         if hasattr(self.config, 'const_threshold'):
             self.const_thresholds = [self.config.const_threshold]
         else:
             self.const_thresholds = [0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5,
                                      0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1.]
-            
-        if self.config.scatter_plot:
-            self.TMRCA_LABEL = []
-            self.TMRCA_PREDICTION = []
-            self.TMRCA_PREDICTION_CONST = {threshold: [] for threshold in self.const_thresholds}
-            self.MAF = []
-
-
 
     @abstractmethod
     def create_data(self):
@@ -668,18 +666,14 @@ class Runner:
                                                                                                          run_segments[
                                                                                                              i]))
                         self.save_segments_json('nb_segments_const_' + str(threshold), run_segments[i])
-
                 if self.config.scatter_plot:
-                # save values concatenated
-                    save_numpy(self.session_name, np.concatenate(self.TMRCA_LABEL, axis=0), 'coalNN_tmrca_label')
-                    save_numpy(self.session_name, np.concatenate(self.TMRCA_PREDICTION, axis=0), 'coalNN_tmrca_prediction')
-                    save_numpy(self.session_name, np.concatenate(self.MAF, axis=0), 'coalNN_maf')
-    
+                    save_numpy(self.session_name, self.TMRCA_LABEL, 'coalNN_tmrca_label')
+                    save_numpy(self.session_name, self.TMRCA_PREDICTION, 'coalNN_tmrca_prediction')
+                    save_numpy(self.session_name, self.MAF, 'coalNN_maf')
                     if self.config.constant_piecewise_output:
-                        for threshold in self.const_thresholds:
-                            save_numpy(self.session_name, np.concatenate(self.TMRCA_PREDICTION_CONST[threshold], axis=0),
-                                       f'coalNN_const_tmrca_prediction_thresh_{threshold}')
-                    # print('Number is_valid', run_nb_is_valid)
+                        for i, threshold in enumerate(self.const_thresholds, 1):
+                            save_numpy(self.session_name, self.TMRCA_PREDICTION_CONST, 'coalNN_const_tmrca_prediction')
+                # print('Number is_valid', run_nb_is_valid)
 
             time_duration = time() - start_time
             print('CoalNN decoding done in : {:.0f}ms'.format(1000 * time_duration))
