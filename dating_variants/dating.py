@@ -368,8 +368,8 @@ class Dating:
         coal_file = None
         if self.config.demography == 'CEU.Terhorst':
             coal_file = "./files/coal/CEU.Terhorst.coal"
-        elif self.config.demography == 'CEU':
-            coal_file = "./files/coal/CEU.popsizes_1kg.generations.mu1.65E-8.haploids.coal"
+        # elif self.config.demography == 'CEU':
+        #    coal_file = "./files/coal/CEU.popsizes_1kg.generations.mu1.65E-8.haploids.coal"
         if coal_file is not None:
             subprocess.run(["../relate_v1.1.6_x86_64_dynamic/bin/Relate",
                             "--mode", "All",
@@ -513,7 +513,7 @@ class Dating:
         # inferred_ts = tsinfer.infer(samples)
 
         # infer ages with tsdate
-        dated_ts = tsdate.date(inferred_ts, Ne=self.config.Ne, mutation_rate=self.config.muration_rate)
+        dated_ts = tsdate.date(inferred_ts, mutation_rate=self.config.muration_rate)
         variants_ages = tsdate.sites_time_from_ts(dated_ts, node_selection='arithmetic')
         # variants_ages = tsdate.sites_time_from_ts(dated_ts, node_selection='geometric')
 
